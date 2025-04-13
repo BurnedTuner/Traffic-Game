@@ -46,7 +46,7 @@ public class TaskManager : MonoBehaviour
                 for (int j = 0; j < AvailibleAgents.Count; j++)
                 {
                     List<Cell> path;
-                    if(MultiLabelAStar.FindPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, AvailibleAgents[j], out path))
+                    if(AStar.FindTwoPointPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, out path, AvailibleAgents[j]))
                     {
                         AvailibleAgents[j].AssignedTask = AvailibleTasks[i];
                         AvailibleAgents[j].Path = path;
@@ -77,7 +77,7 @@ public class TaskManager : MonoBehaviour
         foreach(Task task in AvailibleTasks)
         {
             List<Cell> path;
-            if (MultiLabelAStar.FindPath(task.PickUpNode, task.PickUpNode, task.DeliveryNode, null, out path))
+            if (AStar.FindPath(task.PickUpNode, task.DeliveryNode, out path))
                 for (int i = 0; i < path.Count - 1; i++)
                     Debug.DrawLine(path[i].transform.position + Vector3.up, path[i + 1].transform.position + Vector3.up, Color.green, 10);
             else

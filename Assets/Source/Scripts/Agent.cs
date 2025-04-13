@@ -22,7 +22,7 @@ public class Agent : MonoBehaviour
         if(CurrentCell && AssignedTask.DeliveryNode && AssignedTask.PickUpNode)
         {
             List<Cell> path;
-            if (MultiLabelAStar.FindPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, this, out path))
+            if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
                 for (int i = 0; i < path.Count - 1; i++)
                     Debug.DrawLine(path[i].transform.position + Vector3.up, path[i + 1].transform.position + Vector3.up, Color.red, 10);
             else
@@ -38,17 +38,23 @@ public class Agent : MonoBehaviour
             if (Path[1].AttachedAgent != this && Path[1].AttachedAgent != null)
                 if (!TryUpdatePath())
                     return;
+
             if((Path[1].transform.position - Path[0].transform.position) != Vector3.zero)
-            transform.position += (Path[1].transform.position - Path[0].transform.position).normalized * Speed;
+                transform.position += (Path[1].transform.position - Path[0].transform.position).normalized * Speed;
+            
             Vector3 distance = transform.position - Path[1].transform.position;
             distance.y = 0;
+
             if (distance.magnitude < 0.5f)
             {
                 transform.position = new Vector3(Path[1].transform.position.x, transform.position.y, Path[1].transform.position.z);
                 CurrentCell.AttachedAgent = null;
                 Path.RemoveAt(0);
-                    CurrentCell = Path[0];
-                    CurrentCell.AttachedAgent = this;
+
+                CurrentCell = Path[0];
+                CurrentCell.AttachedAgent = this;
+                if (CurrentCell == AssignedTask.PickUpNode)
+                    AssignedTask.PickedUp = true;
                 if (Path.Count <= 1)
                 {
                     AssignedTask.Complete = true;
@@ -62,9 +68,18 @@ public class Agent : MonoBehaviour
     private bool TryUpdatePath()
     {
         if (CurrentCell && AssignedTask.DeliveryNode && AssignedTask.PickUpNode)
-        { 
+        {
             List<Cell> path;
-            if (MultiLabelAStar.FindPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, this, out path))
+            if (!AssignedTask.PickedUp)
+            {
+                if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
+                {
+                    Path = path;
+                    return true;
+                }
+            }
+            else
+                if (AStar.FindPath(CurrentCell, AssignedTask.DeliveryNode, out path, this))
             {
                 Path = path;
                 return true;
@@ -76,12 +91,12 @@ public class Agent : MonoBehaviour
 
     public void TryFreeCurrentCell()
     {
-        foreach(Cell cell in CurrentCell.ConnectedCells)
+        foreach(Cell cell in CurrentCell.ConnectedCells.Values)
         {
             if(!cell.AttachedAgent)
             {
                 List<Cell> path;
-                if (MultiLabelAStar.FindPath(CurrentCell, cell, cell, this, out path))
+                if (AStar.FindPath(CurrentCell, cell, out path, this))
                     Path = path;
             }
         }

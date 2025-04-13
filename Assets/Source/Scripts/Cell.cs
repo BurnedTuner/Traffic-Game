@@ -7,11 +7,11 @@ public class Cell : MonoBehaviour
     public Agent AttachedAgent;
     public int NodeCost;
     public CellType Type;
-    public List<Cell> ConnectedCells;
+    public Dictionary<Vector3, Cell> ConnectedCells;
 
     public void InitializeNode()
     {
-        ConnectedCells = new List<Cell>();
+        ConnectedCells = new Dictionary<Vector3, Cell>();
         if (ParentGrid)
         {
             if (ParentGrid.GetIndexByCell(this) != Vector2Int.RoundToInt(Vector2.positiveInfinity))
@@ -21,16 +21,16 @@ public class Cell : MonoBehaviour
                 
                 //Left, Top, Right, Down
                 if (ParentGrid.GetCellByIndex(i - 1, j) != null)
-                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i - 1, j));
+                    ConnectedCells.Add(Vector3.left, ParentGrid.GetCellByIndex(i - 1, j));
 
                 if (ParentGrid.GetCellByIndex(i, j + 1) != null)
-                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i, j + 1));
+                    ConnectedCells.Add(Vector3.forward, ParentGrid.GetCellByIndex(i, j + 1));
 
                 if (ParentGrid.GetCellByIndex(i + 1, j) != null)
-                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i + 1, j));
+                    ConnectedCells.Add(Vector3.left, ParentGrid.GetCellByIndex(i + 1, j));
 
                 if (ParentGrid.GetCellByIndex(i, j - 1) != null)
-                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i, j - 1));
+                    ConnectedCells.Add(Vector3.back, ParentGrid.GetCellByIndex(i, j - 1));
             }
         }
     }
@@ -40,7 +40,5 @@ public enum CellType
 {
     Empty,
     Road,
-    Structure,
-    SpecialStructure,
     None
 }
