@@ -7,33 +7,82 @@ public class Cell : MonoBehaviour
     public Agent AttachedAgent;
     public int NodeCost;
     public CellType Type;
-    public Dictionary<Vector3, Cell> ConnectedCells;
+    public List<Cell> ConnectedCells;
+    public Dictionary<Vector3, Cell> RelativeCells;
 
     public void InitializeNode()
     {
-        ConnectedCells = new Dictionary<Vector3, Cell>();
+        RelativeCells = new Dictionary<Vector3, Cell>();
+        ConnectedCells = new List<Cell>();
         if (ParentGrid)
         {
             if (ParentGrid.GetIndexByCell(this) != Vector2Int.RoundToInt(Vector2.positiveInfinity))
             {
                 int i = ParentGrid.GetIndexByCell(this).x;
                 int j = ParentGrid.GetIndexByCell(this).y;
-                
+
                 //Left, Top, Right, Down
                 if (ParentGrid.GetCellByIndex(i - 1, j) != null)
-                    ConnectedCells.Add(Vector3.left, ParentGrid.GetCellByIndex(i - 1, j));
+                {
+                    RelativeCells.Add(Vector3.left, ParentGrid.GetCellByIndex(i - 1, j));
+                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i - 1, j));
+                }
+                else
+                    RelativeCells.Add(Vector3.left, null);
 
                 if (ParentGrid.GetCellByIndex(i, j + 1) != null)
-                    ConnectedCells.Add(Vector3.forward, ParentGrid.GetCellByIndex(i, j + 1));
+                {
+                    RelativeCells.Add(Vector3.forward, ParentGrid.GetCellByIndex(i, j + 1));
+                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i, j + 1));
+                }
+                else
+                    RelativeCells.Add(Vector3.forward, null);
 
                 if (ParentGrid.GetCellByIndex(i + 1, j) != null)
-                    ConnectedCells.Add(Vector3.left, ParentGrid.GetCellByIndex(i + 1, j));
+                {
+                    RelativeCells.Add(Vector3.right, ParentGrid.GetCellByIndex(i + 1, j));
+                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i + 1, j));
+                }
+                else
+                    RelativeCells.Add(Vector3.right, null);
 
                 if (ParentGrid.GetCellByIndex(i, j - 1) != null)
-                    ConnectedCells.Add(Vector3.back, ParentGrid.GetCellByIndex(i, j - 1));
+                {
+                    RelativeCells.Add(Vector3.back, ParentGrid.GetCellByIndex(i, j - 1));
+                    ConnectedCells.Add(ParentGrid.GetCellByIndex(i, j - 1));
+                }
+                else
+                    RelativeCells.Add(Vector3.back, null);
             }
         }
     }
+
+    public CellType[] NeighbouringTypes()
+    {
+        CellType[] result = new CellType[4];
+        if (RelativeCells[Vector3.left] != null)
+            result[0] = RelativeCells[Vector3.left].Type;
+        else
+            result[0] = CellType.None;
+        
+        if (RelativeCells[Vector3.forward] != null)
+            result[1] = RelativeCells[Vector3.forward].Type;
+        else
+            result[1] = CellType.None;
+        
+        if (RelativeCells[Vector3.right] != null)
+            result[2] = RelativeCells[Vector3.right].Type;
+        else
+            result[2] = CellType.None;
+
+        if (RelativeCells[Vector3.back] != null)
+            result[3] = RelativeCells[Vector3.back].Type;
+        else
+            result[3] = CellType.None;
+
+        return result;
+    }
+
 }
 
 public enum CellType

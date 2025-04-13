@@ -68,6 +68,7 @@ public class CellGrid : MonoBehaviour
 
     public Cell GetCellByPosition(Vector3 position)
     {
+        // Debug.Log(position);
         if (!IsPositionInGrid(position))
             return null;
         else
@@ -99,11 +100,11 @@ public class CellGrid : MonoBehaviour
         return IsPositionOfType(position, CellType.Empty);
     }
 
-    public bool IsPositionOfType(Vector3Int position, CellType cellType)
+    public bool IsPositionOfType(Vector3 position, CellType cellType)
     {
         if (!IsPositionInGrid(position))
             throw new IndexOutOfRangeException("Cell " + position + " is not on grid!");
 
-        return _grid[position.x][position.z].Type == cellType;
+        return GetCellByPosition(position).Type == cellType;
     }
 }

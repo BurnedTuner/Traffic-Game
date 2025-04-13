@@ -91,7 +91,7 @@ public class Agent : MonoBehaviour
 
     public void TryFreeCurrentCell()
     {
-        foreach(Cell cell in CurrentCell.ConnectedCells.Values)
+        foreach(Cell cell in CurrentCell.ConnectedCells)
         {
             if(!cell.AttachedAgent)
             {

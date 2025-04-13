@@ -56,7 +56,7 @@ public class AStar
                 return true;
             }
 
-            foreach (Cell cell in queue[lowestFIndex].Item1.ConnectedCells.Values)
+            foreach (Cell cell in queue[lowestFIndex].Item1.ConnectedCells)
             {
                 if (cell.AttachedAgent != agent && cell.AttachedAgent != null)
                     continue;
@@ -105,7 +105,7 @@ public class AStar
                 return true;
             }
 
-            foreach (Cell cell in queue[lowestFIndex].Item1.ConnectedCells.Values)
+            foreach (Cell cell in queue[lowestFIndex].Item1.ConnectedCells)
             {
                 if (cell.AttachedAgent != agent && cell.AttachedAgent != null)
                     continue;
