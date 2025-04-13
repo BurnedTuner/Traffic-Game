@@ -245,7 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentGrid: {fileID: 0}
   AttachedAgent: {fileID: 0}
-  NodeCost: 0
+  NodeCost: 99
   Type: 0
   ConnectedCells: []
 --- !u!65 &1886761689431241674

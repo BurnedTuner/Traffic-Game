@@ -33,7 +33,6 @@ public class GroundPointer : MonoBehaviour
                 if (hit.collider.TryGetComponent(out Ground ground))
                 {
                     Vector3 position = hit.point;
-                    position.y = 0;
                     return position;
                 }
 

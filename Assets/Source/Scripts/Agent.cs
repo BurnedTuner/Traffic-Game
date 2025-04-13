@@ -67,6 +67,7 @@ public class Agent : MonoBehaviour
 
     private bool TryUpdatePath()
     {
+        Debug.Log("Updating Path");
         if (CurrentCell && AssignedTask.DeliveryNode && AssignedTask.PickUpNode)
         {
             List<Cell> path;

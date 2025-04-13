@@ -28,7 +28,7 @@ public class StructureBuilder : MonoBehaviour
         foreach (var tempStruct in _tempStructures.Values)
         {
             var position = Vector3Int.RoundToInt(tempStruct.transform.position);
-            _grid.GetCellByPosition(position).Type = CellType.Empty;
+            _grid.GetCellByPosition(position).ChangeCellType(CellType.Empty);
             Destroy(tempStruct.gameObject);
         }
 
@@ -47,23 +47,22 @@ public class StructureBuilder : MonoBehaviour
         //Debug.Log("Confirming Building");
     }
 
-    public void PlaceTemporaryStructure(Vector3 position, GameObject structurePrefab, CellType cellType)
+    public void PlaceTemporaryStructure(Cell cell, GameObject structurePrefab, CellType cellType)
     {
-        if (!_grid.IsPositionInGrid(position))
-            throw new IndexOutOfRangeException("Cell " + position + " is not on grid!");
+        if (!_grid.IsPositionInGrid(cell.transform.position))
+            throw new IndexOutOfRangeException("Cell " + cell + " is not on grid!");
 
-        Cell tempStructCell = _grid.GetCellByPosition(position);
-        tempStructCell.Type = cellType;
-        StructureModel structureModel = CreateANewStructureModel(position, structurePrefab, cellType);
+        StructureModel structureModel = CreateANewStructureModel(cell, structurePrefab, cellType);
 
-        _tempStructures.Add(tempStructCell, structureModel);
+        _tempStructures.Add(cell, structureModel);
     }
 
-    private StructureModel CreateANewStructureModel(Vector3 position, GameObject structurePrefab, CellType cellType)
+    private StructureModel CreateANewStructureModel(Cell cell, GameObject structurePrefab, CellType cellType)
     {
         GameObject structure = new GameObject(cellType.ToString());
         structure.transform.SetParent(transform); //???
-        structure.transform.localPosition = position;
+        structure.transform.localPosition = cell.transform.position;
+        cell.ChangeCellType(cellType);
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
         return structureModel;

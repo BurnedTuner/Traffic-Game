@@ -47,7 +47,7 @@ public class RoadBuilder : MonoBehaviour
             _temporaryCells.Clear();
             _neighbouringCells.Clear();
             _temporaryCells.Add(cellAtPosition);
-            _builder.PlaceTemporaryStructure(cellAtPosition.transform.position, _connector.DeadEnd, CellType.Road);
+            _builder.PlaceTemporaryStructure(cellAtPosition, _connector.DeadEnd, CellType.Road);
         }
         else
         {
@@ -64,7 +64,6 @@ public class RoadBuilder : MonoBehaviour
             Cell endCell = _builder.GetCellByPosition(position);
 
             List<Cell> tempCells;
-            Debug.Log(AStar.FindPath(startCell, endCell, out tempCells));
             if (AStar.FindPath(startCell, endCell, out tempCells))
             {
                 foreach (Cell cell in tempCells)
@@ -72,7 +71,7 @@ public class RoadBuilder : MonoBehaviour
                     _temporaryCells.Add(cell);
                     if (!_builder.IsPositionFree(cell.transform.position))
                         continue;
-                    _builder.PlaceTemporaryStructure(cell.transform.position, _connector.DeadEnd, CellType.Road);
+                    _builder.PlaceTemporaryStructure(cell, _connector.DeadEnd, CellType.Road);
                 }
             }
         }

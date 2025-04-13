@@ -12,6 +12,7 @@ public class Cell : MonoBehaviour
 
     public void InitializeNode()
     {
+        ChangeCellType(CellType.Empty);
         RelativeCells = new Dictionary<Vector3, Cell>();
         ConnectedCells = new List<Cell>();
         if (ParentGrid)
@@ -83,6 +84,24 @@ public class Cell : MonoBehaviour
         return result;
     }
 
+    public void ChangeCellType(CellType newType)
+    {
+        switch(newType)
+        {
+            case CellType.Empty:
+                NodeCost = 9999;
+                break;
+
+            case CellType.Road:
+                NodeCost = 1;
+                break;
+
+            default:
+                Debug.Log("Uknown Cell Type provided");
+                break;
+        }
+        Type = newType;
+    }
 }
 
 public enum CellType

@@ -65,7 +65,7 @@ public class AStar
                 if (queue[lowestFIndex].Item2.Label == 1 && proccessedLabel1.ContainsKey(cell))
                     continue;
 
-                queue.Add((cell, new NodeInfo(queue[lowestFIndex].Item2.Label, queue[lowestFIndex].Item2.Time + 1, cell, point1, point2)));
+                queue.Add((cell, new NodeInfo(queue[lowestFIndex].Item2.Label, queue[lowestFIndex].Item2.Time + queue[lowestFIndex].Item1.NodeCost, cell, point1, point2)));
                 queue[queue.Count - 1].Item2.CameFrom = queue[lowestFIndex].Item1;
             }  
         }
@@ -112,7 +112,7 @@ public class AStar
                 if (proccessed.ContainsKey(cell))
                     continue;
 
-                queue.Add((cell, new NodeInfo(queue[lowestFIndex].Item2.Label, queue[lowestFIndex].Item2.Time + 1, cell, end)));
+                queue.Add((cell, new NodeInfo(queue[lowestFIndex].Item2.Label, queue[lowestFIndex].Item2.Time + queue[lowestFIndex].Item1.NodeCost, cell, end)));
                 queue[queue.Count - 1].Item2.CameFrom = queue[lowestFIndex].Item1;
             }
         }
@@ -156,28 +156,27 @@ public class AStar
     private class NodeInfo
     {
         public int Label = 0; //label (l)
-        public int Time = 0; //TimeElapsed (g)
+        public float Time = 0; //TimeElapsed (g)
         public float Heuristics = 0; //Heuristics (h)
         public float Priority = 0; //Priority (f)
         public Cell CameFrom;
 
-        public NodeInfo(int l, int g, Cell owner, Cell pickup, Cell delivery)
+        public NodeInfo(int l, float g, Cell owner, Cell pickup, Cell delivery)
         {
             Label = l;
             Time = g;
 
             if (Label == 1)
                 Heuristics = Vector3.Distance(owner.transform.position, pickup.transform.position) +
-                             Vector3.Distance(delivery.transform.position, pickup.transform.position);
+                            Vector3.Distance(delivery.transform.position, pickup.transform.position);
             else if (Label == 2)
                 Heuristics = Vector3.Distance(owner.transform.position, delivery.transform.position);
-            Heuristics += owner.NodeCost;
 
             Priority = Time + Heuristics;
         }
 
 
-        public NodeInfo(int l, int g, Cell owner, Cell pickup)
+        public NodeInfo(int l, float g, Cell owner, Cell pickup)
         {
             Label = l;
             Time = g;
