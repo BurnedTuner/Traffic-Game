@@ -10,7 +10,7 @@ public class GroundPointer : MonoBehaviour
 
     private void Update()
     {
-        if (InputInitializer.Instance.IsHolding)
+        if (InputInitializer.Instance.IsHoldingPrimary)
             OnClickInput(InputInitializer.Instance.MousePosition());
     }
 

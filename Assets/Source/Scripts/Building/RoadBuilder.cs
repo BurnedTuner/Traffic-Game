@@ -18,13 +18,13 @@ public class RoadBuilder : MonoBehaviour
     private void Start()
     {
         _pointer.GroundClicked += OnGroundClicked;
-        InputInitializer.Instance.HoldCancelledInput += OnHoldCancelledInput;
+        InputInitializer.Instance.PrimaryHoldCancelledInput += OnHoldCancelledInput;
     }
 
     private void OnDestroy()
     {
         _pointer.GroundClicked -= OnGroundClicked;
-        InputInitializer.Instance.HoldCancelledInput -= OnHoldCancelledInput;
+        InputInitializer.Instance.PrimaryHoldCancelledInput -= OnHoldCancelledInput;
     }
 
     private void OnGroundClicked(Vector3 position) => PlaceRoad(position);

@@ -10,27 +10,37 @@ public class InputInitializer : MonoBehaviour
 
     private Controls _controls;
 
-    public event Action<Vector2> ClickInput;
-    public event Action<Vector2> HoldStartedInput;
-    public event Action<Vector2> HoldCancelledInput;
+    public event Action<Vector2> PrimaryClickInput;
+    public event Action<Vector2> AltClickInput;
+    public event Action<Vector2> PrimaryHoldStartedInput;
+    public event Action<Vector2> AltHoldStartedInput;
+    public event Action<Vector2> PrimaryHoldCancelledInput;
+    public event Action<Vector2> AltHoldCancelledInput;
 
-    public bool IsHolding { get; private set; }
+    public bool IsHoldingPrimary { get; private set; }
+    public bool IsHoldingAlt { get; private set; }
 
     private void OnEnable()
     {
         CheckInstance();
         _controls = new Controls();
         _controls.Player.Enable();
-        _controls.Player.Click.performed += OnClick;
-        _controls.Player.Hold.started += OnHoldStarted;
-        _controls.Player.Hold.canceled += OnHoldCancelled;
+        _controls.Player.PrimaryClick.performed += OnPrimaryClick;
+        _controls.Player.PrimaryHold.started += OnPrimaryHoldStarted;
+        _controls.Player.PrimaryHold.canceled += OnPrimaryHoldCancelled;
+        _controls.Player.AltClick.performed += OnAltClick;
+        _controls.Player.AltHold.started += OnAltHoldStarted;
+        _controls.Player.AltHold.canceled += OnAltHoldCancelled;
     }
 
     private void OnDisable()
     {
-        _controls.Player.Click.performed -= OnClick;
-        _controls.Player.Hold.started -= OnHoldStarted;
-        _controls.Player.Hold.canceled -= OnHoldCancelled;
+        _controls.Player.PrimaryClick.performed -= OnPrimaryClick;
+        _controls.Player.PrimaryHold.started -= OnPrimaryHoldStarted;
+        _controls.Player.PrimaryHold.canceled -= OnPrimaryHoldCancelled;
+        _controls.Player.AltClick.performed -= OnAltClick;
+        _controls.Player.AltHold.started -= OnAltHoldStarted;
+        _controls.Player.AltHold.canceled -= OnAltHoldCancelled;
         _controls.Player.Disable();
     }
 
@@ -47,18 +57,32 @@ public class InputInitializer : MonoBehaviour
         }
     }
 
-    private void OnClick(InputAction.CallbackContext obj) => ClickInput?.Invoke(MousePosition());
-
     public Vector2 MousePosition() => _controls.Player.MousePosition.ReadValue<Vector2>();
 
-    private void OnHoldCancelled(InputAction.CallbackContext obj) 
+    private void OnPrimaryClick(InputAction.CallbackContext obj) => PrimaryClickInput?.Invoke(MousePosition());
+    private void OnAltClick(InputAction.CallbackContext obj) => AltClickInput?.Invoke(MousePosition());
+
+    private void OnPrimaryHoldStarted(InputAction.CallbackContext obj)
     {
-        HoldCancelledInput?.Invoke(MousePosition());
-        IsHolding = false; 
+        PrimaryHoldStartedInput?.Invoke(MousePosition());
+        IsHoldingPrimary = true;
     }
-    private void OnHoldStarted(InputAction.CallbackContext obj)
+
+    private void OnPrimaryHoldCancelled(InputAction.CallbackContext obj) 
     {
-        HoldStartedInput?.Invoke(MousePosition());
-        IsHolding = true;
+        PrimaryHoldCancelledInput?.Invoke(MousePosition());
+        IsHoldingPrimary = false; 
+    }
+
+    private void OnAltHoldStarted(InputAction.CallbackContext obj)
+    {
+        AltHoldStartedInput?.Invoke(MousePosition());
+        IsHoldingAlt = true;
+    }
+
+    private void OnAltHoldCancelled(InputAction.CallbackContext obj) 
+    {
+        AltHoldCancelledInput?.Invoke(MousePosition());
+        IsHoldingAlt = false; 
     }
 }

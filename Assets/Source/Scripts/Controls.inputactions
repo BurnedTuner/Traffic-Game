@@ -15,19 +15,37 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Click",
+                    "name": "PrimaryClick",
                     "type": "Button",
                     "id": "1ed301b7-4f89-4487-b36b-378e29de8db9",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hold",
+                    "name": "PrimaryHold",
                     "type": "Button",
                     "id": "3b9c5131-43a0-41fe-b655-e1d0abff1d6f",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AltClick",
+                    "type": "Button",
+                    "id": "99c9c4a4-30ed-404a-9109-9d0b682cf9e1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AltHold",
+                    "type": "Button",
+                    "id": "082fa64e-1640-4cf1-9250-4f0a681521b7",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -52,7 +70,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Click",
+                    "action": "PrimaryClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f3584ab-ceb4-48cc-b8e8-0e9618ba1423",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -63,7 +92,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hold",
+                    "action": "PrimaryHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0cef0d5-c9d9-4662-a310-d5034df078fb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AltHold",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
