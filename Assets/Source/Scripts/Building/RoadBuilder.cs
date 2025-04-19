@@ -93,7 +93,7 @@ public class RoadBuilder : MonoBehaviour
             _neighbouringCells.AddRange(_builder.GetCellByPosition(cell.transform.position).ConnectedCells);
 
             foreach (Cell neighbour in _neighbouringCells)
-                if(!_temporaryCells.Contains(neighbour))
+                if (!_temporaryCells.Contains(neighbour))
                     _connector.ConnectRoadAtCell(neighbour);
         }
     }

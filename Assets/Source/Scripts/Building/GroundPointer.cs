@@ -7,6 +7,17 @@ using UnityEngine.EventSystems;
 public class GroundPointer : MonoBehaviour
 {
     public event Action<Vector3> GroundClicked;
+    public event Action<Vector3> GroundAltClicked;
+
+    private void OnEnable()
+    {
+        InputInitializer.Instance.AltClickInput += OnAltClickInput;
+    }
+
+    private void OnDisable()
+    {
+        InputInitializer.Instance.AltClickInput -= OnAltClickInput;
+    }
 
     private void Update()
     {
@@ -14,9 +25,17 @@ public class GroundPointer : MonoBehaviour
             OnClickInput(InputInitializer.Instance.MousePosition());
     }
 
+    private void OnAltClickInput(Vector2 screenPos)
+    {
+        if (RaycastGround(screenPos) != null)
+        {
+            Vector3 position = (Vector3)RaycastGround(screenPos);
+            GroundAltClicked?.Invoke(position);
+        }
+    }
+
     private void OnClickInput(Vector2 screenPos)
     {
-
         if (RaycastGround(screenPos) != null)
         {
             Vector3 position = (Vector3)RaycastGround(screenPos);

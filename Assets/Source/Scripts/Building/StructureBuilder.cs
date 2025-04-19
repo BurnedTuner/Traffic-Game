@@ -71,6 +71,7 @@ public class StructureBuilder : MonoBehaviour
 
     public void ModifyStructureModel(Cell modifiedCell, GameObject newModel, Quaternion rotation)
     {
+        Debug.Log(modifiedCell.name);
         if (_tempStructures.ContainsKey(modifiedCell))
             _tempStructures[modifiedCell].SwapModel(newModel, rotation);
         else if (_structureDictionary.ContainsKey(modifiedCell))

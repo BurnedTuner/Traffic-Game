@@ -96,6 +96,10 @@ public class Cell : MonoBehaviour
                 NodeCost = 1;
                 break;
 
+            case CellType.Storage:
+                NodeCost = 1;
+                break;
+
             default:
                 Debug.Log("Uknown Cell Type provided");
                 break;
@@ -108,5 +112,6 @@ public enum CellType
 {
     Empty,
     Road,
+    Storage,
     None
 }

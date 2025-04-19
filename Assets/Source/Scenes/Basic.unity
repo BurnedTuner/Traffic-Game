@@ -523,6 +523,7 @@ GameObject:
   - component: {fileID: 613789376}
   - component: {fileID: 613789375}
   - component: {fileID: 613789374}
+  - component: {fileID: 613789378}
   m_Layer: 0
   m_Name: StructureBuilder
   m_TagString: Untagged
@@ -594,6 +595,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613789378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613789373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7383a2f9c5bae49890f583e4632437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _builder: {fileID: 613789376}
+  _neighbouringCells: []
+  _pointer: {fileID: 1693285889}
+  _connector: {fileID: 613789374}
+  _storagePrefab: {fileID: 7884453770640116474, guid: a41cca04b8ba4164d85a7382a53b0c83, type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
