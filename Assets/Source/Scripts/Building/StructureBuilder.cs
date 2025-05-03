@@ -6,7 +6,6 @@ public class StructureBuilder : MonoBehaviour
 {
     [SerializeField] private CellGrid _grid;
 
-
     private Dictionary<Cell, StructureModel> _tempStructures = new Dictionary<Cell, StructureModel>();
     private Dictionary<Cell, StructureModel> _structureDictionary = new Dictionary<Cell, StructureModel>();
 
@@ -71,7 +70,6 @@ public class StructureBuilder : MonoBehaviour
 
     public void ModifyStructureModel(Cell modifiedCell, GameObject newModel, Quaternion rotation)
     {
-        Debug.Log(modifiedCell.name);
         if (_tempStructures.ContainsKey(modifiedCell))
             _tempStructures[modifiedCell].SwapModel(newModel, rotation);
         else if (_structureDictionary.ContainsKey(modifiedCell))

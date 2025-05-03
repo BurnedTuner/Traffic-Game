@@ -17,7 +17,7 @@ public class RoadConnector : MonoBehaviour
 
     public void ConnectRoadAtCell(Cell cell)
     {
-        if (cell.Type != CellType.Road)
+        if(cell.Type != CellType.Road)
             return;
 
         CellType[] neighbourTypes = cell.NeighbouringTypes();

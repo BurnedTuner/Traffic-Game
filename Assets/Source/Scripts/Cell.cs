@@ -106,6 +106,11 @@ public class Cell : MonoBehaviour
         }
         Type = newType;
     }
+
+    public bool IsWalkable()
+    {
+        return Type == CellType.Road || Type == CellType.Storage;
+    }
 }
 
 public enum CellType
