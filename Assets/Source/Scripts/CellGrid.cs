@@ -11,10 +11,10 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
     public List<List<Cell>> Cells;
     public List<List<GameObject>> CellGameObjects;
 
-    //private void Awake()
-    //{
-    //    CreateGrid();
-    //}
+    private void Awake()
+    {
+        CreateGrid();
+    }
 
 
     [ContextMenu("Create Grid")]
@@ -110,6 +110,13 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
 
     public void LoadData(StateData stateData)
     {
+        for (int i = 0; i < _gridSize.x; i++)
+        {
+            for (int j = 0; j < _gridSize.y; j++)
+            {
+                Destroy(CellGameObjects[i][j]);
+            }
+        }
         _gridOrigin = stateData.GridOrigin;
         _gridSize = stateData.GridSize;
         _cellSize = stateData.CellSize;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaskManager : MonoBehaviour
+public class TaskManager : MonoBehaviour, ISaveLoadDependant
 {
     [Header("Task To Add")]
     public Task TaskToAdd;
@@ -83,5 +83,17 @@ public class TaskManager : MonoBehaviour
             else
                 Debug.Log("No path availible");
         }
+    }
+
+    public void LoadData(StateData stateData)
+    {
+        Debug.Log("s");
+        AllAgents = new List<Agent>();
+        AllAgents.AddRange(FindObjectsByType<Agent>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID));
+    }
+
+    public void SaveData(ref StateData stateData)
+    {
+        
     }
 }
