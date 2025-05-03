@@ -8,8 +8,8 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
     [SerializeField] private Vector2Int _gridSize;
     [SerializeField] private Vector3 _cellSize;
     [SerializeField] private GameObject _cellPrefab;
-    public List<List<Cell>> _grid;
-    public List<List<GameObject>> _gridObjects;
+    public List<List<Cell>> Cells;
+    public List<List<GameObject>> CellGameObjects;
 
     //private void Awake()
     //{
@@ -20,28 +20,28 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
     [ContextMenu("Create Grid")]
     private void CreateGrid()
     {
-        _grid = new List<List<Cell>>();
-        _gridObjects = new List<List<GameObject>>();
+        Cells = new List<List<Cell>>();
+        CellGameObjects = new List<List<GameObject>>();
         for (int i = 0; i < _gridSize.x; i++)
         {
-            _grid.Add(new List<Cell>());
-            _gridObjects.Add(new List<GameObject>());
+            Cells.Add(new List<Cell>());
+            CellGameObjects.Add(new List<GameObject>());
             for (int j = 0; j < _gridSize.y; j++)
             {
-                _gridObjects[i].Add(Instantiate(_cellPrefab));
-                _gridObjects[i][j].name += i.ToString() + j.ToString();
-                _gridObjects[i][j].transform.position = _gridOrigin + Vector3.right * _cellSize.x * i + Vector3.forward * _cellSize.z * j;
-                _gridObjects[i][j].transform.parent = transform;
+                CellGameObjects[i].Add(Instantiate(_cellPrefab));
+                CellGameObjects[i][j].name += i.ToString() + j.ToString();
+                CellGameObjects[i][j].transform.position = _gridOrigin + Vector3.right * _cellSize.x * i + Vector3.forward * _cellSize.z * j;
+                CellGameObjects[i][j].transform.parent = transform;
 
-                _grid[i].Add(_gridObjects[i][j].GetComponent<Cell>());
-                _grid[i][j].ParentGrid = this;
+                Cells[i].Add(CellGameObjects[i][j].GetComponent<Cell>());
+                Cells[i][j].ParentGrid = this;
             }
         }
 
         for (int i = 0; i < _gridSize.x; i++)
         {
             for (int j = 0; j < _gridSize.y; j++)
-                _grid[i][j].InitializeNode();
+                Cells[i][j].InitializeNode();
         }
     }
 
@@ -50,7 +50,7 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
         for (int i = 0; i < _gridSize.x; i++)
         {
             for (int j = 0; j < _gridSize.y; j++)
-                if (_grid[i][j] == cell)
+                if (Cells[i][j] == cell)
                     return new Vector2Int(i, j);
         }
 
@@ -60,9 +60,9 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
     public Cell GetCellByIndex(int ind1, int ind2)
     {
         if (ind1 >= 0 && ind2 >= 0)
-            if (_grid.Count > ind1)
-                if (_grid[ind1].Count > ind2)
-                    return _grid[ind1][ind2];
+            if (Cells.Count > ind1)
+                if (Cells[ind1].Count > ind2)
+                    return Cells[ind1][ind2];
         return null;
     }
 
@@ -76,7 +76,7 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
             position -= _gridOrigin;
             int i = Mathf.RoundToInt(position.x / _cellSize.x);
             int j = Mathf.RoundToInt(position.z / _cellSize.z);
-            return _grid[i][j];
+            return Cells[i][j];
         }
     }
 
@@ -86,8 +86,8 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
         int i = Mathf.RoundToInt(position.x / _cellSize.x);
         int j = Mathf.RoundToInt(position.z / _cellSize.z);
         if (i >= 0 && j >= 0)
-            if (_grid.Count > i)
-                if (_grid[i].Count > j)
+            if (Cells.Count > i)
+                if (Cells[i].Count > j)
                     return true;
         return false;
     }
@@ -113,7 +113,6 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
         _gridOrigin = stateData.GridOrigin;
         _gridSize = stateData.GridSize;
         _cellSize = stateData.CellSize;
-        Debug.Log("Recived CellSize: " + _cellSize);
         CreateGrid();
     }
 
@@ -122,6 +121,5 @@ public class CellGrid : MonoBehaviour, ISaveLoadDependant
         stateData.GridOrigin = _gridOrigin;
         stateData.GridSize = _gridSize;
         stateData.CellSize = _cellSize;
-        Debug.Log("Sent To Save CellSize: " + _cellSize);
     }
 }

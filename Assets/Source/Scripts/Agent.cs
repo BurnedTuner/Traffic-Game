@@ -9,8 +9,9 @@ public class Agent : MonoBehaviour
     public List<Cell> Path;
     public float Speed;
 
-    private void Start()
+    public void Setup()
     {
+        AttachedGrid = FindAnyObjectByType<CellGrid>();
         CurrentCell = AttachedGrid.GetCellByPosition(transform.position);
         CurrentCell.AttachedAgent = this;
     }

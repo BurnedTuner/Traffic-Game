@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
 
 public class StateManager : MonoBehaviour
 {
     [SerializeField] private string _stateName;
-    private List<ISaveLoadDependant> _saveloadObjects;
-    private StateData _stateData;
+    [SerializeField] private StateData _stateData;
+    [SerializeField] private List<GameObject> _selectiveSaveLoad = new List<GameObject>();
+    private List<ISaveLoadDependant> _saveLoadObjects = new List<ISaveLoadDependant>();
     private FileDataHandler _fileHandler;
 
 
@@ -26,8 +28,15 @@ public class StateManager : MonoBehaviour
     private void Start()
     {
         _fileHandler = new FileDataHandler(Application.dataPath, _stateName);
-        _saveloadObjects = FindAllSaveLoadObjects();
+        if (_selectiveSaveLoad.Count == 0)
+            _saveLoadObjects = FindAllSaveLoadObjects();
+        else
+        {
+            foreach (GameObject gameObject in _selectiveSaveLoad)
+                _saveLoadObjects.AddRange(gameObject.GetComponents<MonoBehaviour>().OfType<ISaveLoadDependant>());
+        }
     }
+
     public void NewState()
     {
         if (_stateName != "")
@@ -46,7 +55,7 @@ public class StateManager : MonoBehaviour
             NewState();
         }
 
-        foreach(ISaveLoadDependant saveLoadObject in _saveloadObjects)
+        foreach(ISaveLoadDependant saveLoadObject in _saveLoadObjects)
         {
             saveLoadObject.LoadData(_stateData);
         }
@@ -60,7 +69,7 @@ public class StateManager : MonoBehaviour
             NewState();
         }
 
-        foreach (ISaveLoadDependant saveLoadObject in _saveloadObjects)
+        foreach (ISaveLoadDependant saveLoadObject in _saveLoadObjects)
         {
             saveLoadObject.SaveData(ref _stateData);
         }
