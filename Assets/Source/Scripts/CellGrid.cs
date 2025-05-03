@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellGrid : MonoBehaviour
+public class CellGrid : MonoBehaviour, ISaveLoadDependant
 {
     [SerializeField] private Vector3 _gridOrigin;
     [SerializeField] private Vector2Int _gridSize;
@@ -11,10 +11,10 @@ public class CellGrid : MonoBehaviour
     public List<List<Cell>> _grid;
     public List<List<GameObject>> _gridObjects;
 
-    private void Awake()
-    {
-        CreateGrid();
-    }
+    //private void Awake()
+    //{
+    //    CreateGrid();
+    //}
 
 
     [ContextMenu("Create Grid")]
@@ -106,5 +106,22 @@ public class CellGrid : MonoBehaviour
             throw new IndexOutOfRangeException("Cell " + position + " is not on grid!");
 
         return GetCellByPosition(position).Type == cellType;
+    }
+
+    public void LoadData(StateData stateData)
+    {
+        _gridOrigin = stateData.GridOrigin;
+        _gridSize = stateData.GridSize;
+        _cellSize = stateData.CellSize;
+        Debug.Log("Recived CellSize: " + _cellSize);
+        CreateGrid();
+    }
+
+    public void SaveData(ref StateData stateData)
+    {
+        stateData.GridOrigin = _gridOrigin;
+        stateData.GridSize = _gridSize;
+        stateData.CellSize = _cellSize;
+        Debug.Log("Sent To Save CellSize: " + _cellSize);
     }
 }
