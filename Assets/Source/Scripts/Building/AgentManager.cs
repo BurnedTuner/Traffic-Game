@@ -6,6 +6,13 @@ public class AgentManager : MonoBehaviour, ISaveLoadDependant
     [SerializeField] private GameObject _agentPrefab;
     [SerializeField] private List<Agent> _agents;
 
+    [ContextMenu("Find All Agents")]
+    private void FindAllAgents()
+    {
+        _agents = new List<Agent>();
+        _agents.AddRange(FindObjectsByType<Agent>(FindObjectsSortMode.InstanceID));
+    }
+
     public void LoadData(StateData stateData)
     {
         foreach (Agent agent in _agents)
