@@ -38,8 +38,21 @@ public class FileDataHandler
                 Debug.LogError("Error Occured when trying to load data from file: " + fullpath + "\n" + e);
             }
         }
-        
+
+        Debug.Log("Loaded from: " + fullpath);
         return loadedData;
+    }
+
+    public StateData Load(string fileName)
+    {
+        _dataFileName = fileName;
+        return Load();
+    }
+
+    public void Save(string fileName, StateData data)
+    {
+        _dataFileName = fileName;
+        Save(data);
     }
 
     public void Save(StateData data)

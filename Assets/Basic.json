@@ -14,7 +14,13 @@
         "y": 1.0,
         "z": 1.0
     },
-    "AgentPositions": [],
+    "AgentPositions": [
+        {
+            "x": 0.0,
+            "y": 1.8799999952316285,
+            "z": 6.0
+        }
+    ],
     "RoadPositions": [
         {
             "x": 0.0,

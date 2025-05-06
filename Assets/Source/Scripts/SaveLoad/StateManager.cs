@@ -48,7 +48,7 @@ public class StateManager : MonoBehaviour
     [ContextMenu("Load")]
     public void LoadState()
     {
-        _stateData = _fileHandler.Load();
+        _stateData = _fileHandler.Load(_stateName);
         if(_stateData == null)
         {
             Debug.Log("No Data Found on LoadState. Initializing new state");
@@ -74,7 +74,7 @@ public class StateManager : MonoBehaviour
             saveLoadObject.SaveData(ref _stateData);
         }
 
-        _fileHandler.Save(_stateData);
+        _fileHandler.Save(_stateName, _stateData);
     }
 
     private List<ISaveLoadDependant> FindAllSaveLoadObjects()

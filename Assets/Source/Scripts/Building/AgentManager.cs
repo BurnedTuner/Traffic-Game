@@ -31,6 +31,7 @@ public class AgentManager : MonoBehaviour, ISaveLoadDependant
 
     public void SaveData(ref StateData stateData)
     {
+        FindAllAgents();
         List<Vector3> positionsToSave = new List<Vector3>();
         foreach(Agent agent in _agents)
         {
