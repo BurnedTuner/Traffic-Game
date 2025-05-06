@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ public class Agent : MonoBehaviour
     public Cell CurrentCell;
     public List<Cell> Path;
     public float Speed;
+
+    public event Action<Agent> StepTaken;
 
     public void Setup()
     {
@@ -48,6 +51,7 @@ public class Agent : MonoBehaviour
 
             if (distance.magnitude < 0.5f)
             {
+                StepTaken?.Invoke(this);
                 transform.position = new Vector3(Path[1].transform.position.x, transform.position.y, Path[1].transform.position.z);
                 CurrentCell.AttachedAgent = null;
                 Path.RemoveAt(0);

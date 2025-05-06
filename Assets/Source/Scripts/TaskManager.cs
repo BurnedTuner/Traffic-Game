@@ -87,7 +87,6 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
 
     public void LoadData(StateData stateData)
     {
-        Debug.Log("s");
         AllAgents = new List<Agent>();
         AllAgents.AddRange(FindObjectsByType<Agent>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID));
     }
