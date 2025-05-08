@@ -12,7 +12,6 @@ public class StateManager : MonoBehaviour
     private List<ISaveLoadDependant> _saveLoadObjects = new List<ISaveLoadDependant>();
     private FileDataHandler _fileHandler;
 
-
     public static StateManager Instance { get; private set; }
 
     private void Awake()

@@ -11,6 +11,8 @@ public class Agent : MonoBehaviour
     public float Speed;
 
     public event Action<Agent> StepTaken;
+    public event Action<Agent> Idle;
+    public event Action<Agent> Blocked;
 
     public void Setup()
     {
@@ -29,8 +31,6 @@ public class Agent : MonoBehaviour
             if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
                 for (int i = 0; i < path.Count - 1; i++)
                     Debug.DrawLine(path[i].transform.position + Vector3.up, path[i + 1].transform.position + Vector3.up, Color.red, 10);
-            else
-                Debug.Log("No path availible");
         }
     }
 
@@ -41,11 +41,14 @@ public class Agent : MonoBehaviour
             DrawPath();
             if (Path[1].AttachedAgent != this && Path[1].AttachedAgent != null)
                 if (!TryUpdatePath())
+                {
+                    Blocked?.Invoke(this);
                     return;
+                }
 
-            if((Path[1].transform.position - Path[0].transform.position) != Vector3.zero)
+            if ((Path[1].transform.position - Path[0].transform.position) != Vector3.zero)
                 transform.position += (Path[1].transform.position - Path[0].transform.position).normalized * Speed;
-            
+
             Vector3 distance = transform.position - Path[1].transform.position;
             distance.y = 0;
 
@@ -60,13 +63,16 @@ public class Agent : MonoBehaviour
                 CurrentCell.AttachedAgent = this;
                 if (CurrentCell == AssignedTask.PickUpNode)
                     AssignedTask.PickedUp = true;
-                if (Path.Count <= 1)
-                {
-                    AssignedTask.Complete = true;
-                    AssignedTask = new Task();
-                    Debug.Log("Finished Task");
-                }
             }
+        }
+        else
+            Idle?.Invoke(this);
+
+        if (Path.Count <= 1 && AssignedTask.DeliveryNode != null)
+        {
+            AssignedTask.Complete = true;
+            AssignedTask = new Task();
+            Debug.Log("Finished Task");
         }
     }
 
@@ -76,6 +82,7 @@ public class Agent : MonoBehaviour
         if (CurrentCell && AssignedTask.DeliveryNode && AssignedTask.PickUpNode)
         {
             List<Cell> path;
+            
             if (!AssignedTask.PickedUp)
             {
                 if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
@@ -97,6 +104,7 @@ public class Agent : MonoBehaviour
 
     public void TryFreeCurrentCell()
     {
+        Debug.Log("Try Free Current Cell");
         foreach(Cell cell in CurrentCell.ConnectedCells)
         {
             if(!cell.AttachedAgent)

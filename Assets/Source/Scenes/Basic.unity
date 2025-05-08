@@ -250,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.67559016, y: 0, z: 0, w: 0.7372774}
-  m_LocalPosition: {x: 4.06, y: 6.74, z: 1.3}
+  m_LocalPosition: {x: 4.06, y: 6.97, z: 3.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentManager: {fileID: 1524481048}
   StepsTakenTotal: 0
+  TotalIdle: 0
+  TotalBlocked: 0
 --- !u!4 &345880988
 Transform:
   m_ObjectHideFlags: 0
@@ -692,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a127f6bda74fff4d92c37e112fdb1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateName: Basic.json
+  _stateName: Double.json
   _stateData:
     _stateName: NewState
     GridOrigin: {x: 0, y: 0, z: 0}
@@ -702,12 +704,18 @@ MonoBehaviour:
     RoadPositions: []
     StoragePositions: []
     StepsTotal: 0
+    TotalIdle: 0
+    TotalBlocked: 0
+    StepsPerAgent: 
+    BlockedPerAgent: 
+    IdlePerAgent: 
   _selectiveSaveLoad:
   - {fileID: 1855684795}
   - {fileID: 799441304}
   - {fileID: 1524481047}
   - {fileID: 2075153008}
   - {fileID: 345880986}
+  StartStatistics: 1
 --- !u!114 &799441307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,7 +899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridOrigin: {x: 0, y: 0, z: 0}
-  _gridSize: {x: 10, y: 10}
+  _gridSize: {x: 9, y: 9}
   _cellSize: {x: 1, y: 1, z: 1}
   _cellPrefab: {fileID: 5394341812250677516, guid: c86f9a6668147e94e88441ce12bf232d, type: 3}
 --- !u!4 &1855684797
@@ -938,6 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ebcf83c6ee1204faf20ccfb86f58b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _grid: {fileID: 1855684796}
   TaskToAdd:
     PickUpNode: {fileID: 0}
     DeliveryNode: {fileID: 0}
@@ -948,6 +957,9 @@ MonoBehaviour:
   AvailibleTasks: []
   AllAgents: []
   AvailibleAgents: []
+  GenerateTasks: 1
+  PossibleCells: []
+  AmountOfTasks: 20
 --- !u!4 &2075153010
 Transform:
   m_ObjectHideFlags: 0

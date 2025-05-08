@@ -89,7 +89,7 @@ public class Cell : MonoBehaviour
         switch(newType)
         {
             case CellType.Empty:
-                NodeCost = 9999;
+                NodeCost = 99;
                 break;
 
             case CellType.Road:

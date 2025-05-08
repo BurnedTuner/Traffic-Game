@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour, ISaveLoadDependant
 {
+    public CellGrid _grid;
+    public StatisticsManager _stats;
+
     [Header("Task To Add")]
     public Task TaskToAdd;
 
@@ -11,6 +14,10 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
     public List<Agent> AllAgents;
     public List<Agent> AvailibleAgents;
 
+    [Header("Generating Tasks")]
+    public bool GenerateTasks;
+    public List<Cell> PossibleCells;
+    public int AmountOfTasks;
 
     [ContextMenu("Add Task")]
     private void AddTask()
@@ -21,6 +28,7 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
 
     private void Update()
     {
+        _stats.CollectStats = AllTasks.Count > 0;
         AvailibleAgents = new List<Agent>();
         AvailibleTasks = new List<Task>();
         for (int i = 0; i < AllTasks.Count; i++)
@@ -40,26 +48,25 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
             if (agent.AssignedTask.PickUpNode == null)
                 AvailibleAgents.Add(agent);
 
-        if(AvailibleTasks.Count > 0)
-        {
-            for(int i = 0; i < AvailibleTasks.Count; i++)
-                for (int j = 0; j < AvailibleAgents.Count; j++)
+        for (int i = 0; i < AvailibleTasks.Count; i++)
+            for (int j = 0; j < AvailibleAgents.Count; j++)
+            {
+                List<Cell> path;
+                if (AStar.FindTwoPointPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, out path, AvailibleAgents[j]))
                 {
-                    List<Cell> path;
-                    if(AStar.FindTwoPointPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, out path, AvailibleAgents[j]))
-                    {
-                        AvailibleAgents[j].AssignedTask = AvailibleTasks[i];
-                        AvailibleAgents[j].Path = path;
-                        AvailibleTasks[i].AssignedAgent = AvailibleAgents[j];
-                        AvailibleTasks.Remove(AvailibleTasks[i]);
-                        AvailibleAgents.Remove(AvailibleAgents[j]);
-                        i--;
-                        break;
-                    } 
+                    AllTasks.Find(x => x == AvailibleTasks[i]).AssignedAgent = AvailibleAgents[j];
+                    AvailibleTasks[i].AssignedAgent = AvailibleAgents[j];
+                    AllAgents.Find(x => x == AvailibleAgents[j]).AssignedTask = AvailibleTasks[i];
+                    AvailibleAgents[j].Path = path;
+                    AvailibleTasks.Remove(AvailibleTasks[i]);
+                    AvailibleAgents.Remove(AvailibleAgents[j]);
+                    Debug.Log(i);
+                    i--;
+                    j--;
+                    break;
                 }
-
-            DrawPath();
-        }
+            }
+            //DrawPath();
 
         if(AvailibleAgents.Count > 0)
         {
@@ -89,6 +96,26 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
     {
         AllAgents = new List<Agent>();
         AllAgents.AddRange(FindObjectsByType<Agent>(FindObjectsInactive.Include, FindObjectsSortMode.InstanceID));
+
+        if (GenerateTasks)
+        {
+            AllTasks = new List<Task>();
+            PossibleCells = new List<Cell>();
+            foreach (Vector3 position in stateData.StoragePositions)
+            {
+                PossibleCells.Add(_grid.GetCellByPosition(position));
+            }
+
+            for (int i = 0; i < AmountOfTasks; i++)
+            {
+                TaskToAdd = new Task();
+                int pickUp = Random.Range(0, PossibleCells.Count - 1);
+                int delivery = Random.Range(0, PossibleCells.Count - 1);
+                TaskToAdd.PickUpNode = PossibleCells[pickUp];
+                TaskToAdd.DeliveryNode = PossibleCells[delivery];
+                AllTasks.Add(TaskToAdd);
+            }
+        }
     }
 
     public void SaveData(ref StateData stateData)

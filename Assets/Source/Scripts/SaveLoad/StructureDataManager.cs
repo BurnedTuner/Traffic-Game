@@ -12,6 +12,7 @@ public class StructureDataManager : MonoBehaviour, ISaveLoadDependant
         foreach(Vector3 position in stateData.RoadPositions)
         {
             _roadBuilder.PlaceRoad(position);
+            _roadBuilder.FinishPlacingRoad();
         }
 
         foreach(Vector3 position in stateData.StoragePositions)

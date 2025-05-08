@@ -12,7 +12,11 @@ public class StateData
     public List<Vector3> RoadPositions;
     public List<Vector3> StoragePositions;
     public int StepsTotal;
-    public Dictionary<Vector3, int> StepsPerAgent;
+    public int TotalIdle;
+    public int TotalBlocked;
+    public List<int> StepsPerAgent;
+    public List<int> BlockedPerAgent;
+    public List<int> IdlePerAgent;
 
     public StateData()
     {
@@ -24,7 +28,11 @@ public class StateData
         RoadPositions = new List<Vector3>();
         StoragePositions = new List<Vector3>();
         StepsTotal = 0;
-        StepsPerAgent = new Dictionary<Vector3, int>();
+        TotalIdle = 0;
+        TotalBlocked = 0;
+        StepsPerAgent = new List<int>();
+        IdlePerAgent = new List<int>();
+        BlockedPerAgent = new List<int>();
     }
 
     public StateData(string stateName)
@@ -37,6 +45,10 @@ public class StateData
         RoadPositions = new List<Vector3>();
         StoragePositions = new List<Vector3>();
         StepsTotal = 0;
-        StepsPerAgent = new Dictionary<Vector3, int>();
+        TotalIdle = 0;
+        TotalBlocked = 0;
+        StepsPerAgent = new List<int>();
+        IdlePerAgent = new List<int>();
+        BlockedPerAgent = new List<int>();
     }
 }

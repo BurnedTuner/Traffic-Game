@@ -18,7 +18,7 @@
         {
             "x": 0.0,
             "y": 1.8799999952316285,
-            "z": 6.0
+            "z": 4.0
         }
     ],
     "RoadPositions": [
@@ -84,5 +84,17 @@
             "y": 0.0,
             "z": 6.0
         }
+    ],
+    "StepsTotal": 22,
+    "TotalIdle": 1,
+    "TotalBlocked": 0,
+    "StepsPerAgent": [
+        22
+    ],
+    "BlockedPerAgent": [
+        0
+    ],
+    "IdlePerAgent": [
+        1
     ]
 }

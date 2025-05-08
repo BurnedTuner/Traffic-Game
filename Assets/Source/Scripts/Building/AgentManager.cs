@@ -8,6 +8,8 @@ public class AgentManager : MonoBehaviour, ISaveLoadDependant
     public Dictionary<Agent, Vector3> Agents = new Dictionary<Agent, Vector3>();
 
     public event Action<Vector3> StepTaken;
+    public event Action<Vector3> Blocked;
+    public event Action<Vector3> Idle;
 
     [ContextMenu("Find All Agents")]
     private void FindAllAgents()
@@ -21,7 +23,6 @@ public class AgentManager : MonoBehaviour, ISaveLoadDependant
 
     private void OnStepTaken(Agent obj)
     {
-        Debug.Log("sss");
         StepTaken?.Invoke(Agents[obj]);
     }
 
@@ -39,7 +40,19 @@ public class AgentManager : MonoBehaviour, ISaveLoadDependant
             Agents.Add(agent.GetComponent<Agent>(), position);
             agent.GetComponent<Agent>().Setup();
             agent.GetComponent<Agent>().StepTaken += OnStepTaken;
+            agent.GetComponent<Agent>().Idle += OnIdle;
+            agent.GetComponent<Agent>().Blocked += OnBlocked;
         }
+    }
+
+    private void OnIdle(Agent obj)
+    {
+        Idle?.Invoke(Agents[obj]);
+    }
+
+    private void OnBlocked(Agent obj)
+    {
+        Blocked?.Invoke(Agents[obj]);
     }
 
     public void SaveData(ref StateData stateData)
