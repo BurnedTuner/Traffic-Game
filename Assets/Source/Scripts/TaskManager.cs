@@ -120,6 +120,6 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
 
     public void SaveData(ref StateData stateData)
     {
-        
+        stateData.AmountOfTasks = AmountOfTasks;
     }
 }

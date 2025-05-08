@@ -333,6 +333,7 @@ MonoBehaviour:
   StepsTakenTotal: 0
   TotalIdle: 0
   TotalBlocked: 0
+  CollectStats: 0
 --- !u!4 &345880988
 Transform:
   m_ObjectHideFlags: 0
@@ -715,7 +716,6 @@ MonoBehaviour:
   - {fileID: 1524481047}
   - {fileID: 2075153008}
   - {fileID: 345880986}
-  StartStatistics: 1
 --- !u!114 &799441307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -947,6 +947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grid: {fileID: 1855684796}
+  _stats: {fileID: 345880987}
   TaskToAdd:
     PickUpNode: {fileID: 0}
     DeliveryNode: {fileID: 0}

@@ -14,6 +14,7 @@ public class StateData
     public int StepsTotal;
     public int TotalIdle;
     public int TotalBlocked;
+    public int AmountOfTasks;
     public List<int> StepsPerAgent;
     public List<int> BlockedPerAgent;
     public List<int> IdlePerAgent;
@@ -30,6 +31,7 @@ public class StateData
         StepsTotal = 0;
         TotalIdle = 0;
         TotalBlocked = 0;
+        AmountOfTasks = 0;
         StepsPerAgent = new List<int>();
         IdlePerAgent = new List<int>();
         BlockedPerAgent = new List<int>();
@@ -47,6 +49,7 @@ public class StateData
         StepsTotal = 0;
         TotalIdle = 0;
         TotalBlocked = 0;
+        AmountOfTasks = 0;
         StepsPerAgent = new List<int>();
         IdlePerAgent = new List<int>();
         BlockedPerAgent = new List<int>();
