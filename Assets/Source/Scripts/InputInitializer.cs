@@ -17,6 +17,7 @@ public class InputInitializer : MonoBehaviour
     public event Action<Vector2> AltHoldStartedInput;
     public event Action<Vector2> PrimaryHoldCancelledInput;
     public event Action<Vector2> AltHoldCancelledInput;
+    public event Action<Vector2> MovementInput;
 
     public bool IsHoldingPrimary { get; private set; }
     public bool IsHoldingAlt { get; private set; }
@@ -59,6 +60,13 @@ public class InputInitializer : MonoBehaviour
             Instance = this;
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (_controls.Player.Move.ReadValue<Vector2>() != Vector2.zero)
+            MovementInput?.Invoke(_controls.Player.Move.ReadValue<Vector2>());
+    }
+
 
     public Vector2 MousePosition() => _controls.Player.MousePosition.ReadValue<Vector2>();
 
