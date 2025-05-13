@@ -12,6 +12,7 @@ public class InputInitializer : MonoBehaviour
 
     public event Action<Vector2> PrimaryClickInput;
     public event Action<Vector2> AltClickInput;
+    public event Action<Vector2> OnRemoveInput;
     public event Action<Vector2> PrimaryHoldStartedInput;
     public event Action<Vector2> AltHoldStartedInput;
     public event Action<Vector2> PrimaryHoldCancelledInput;
@@ -29,6 +30,7 @@ public class InputInitializer : MonoBehaviour
         _controls.Player.PrimaryHold.started += OnPrimaryHoldStarted;
         _controls.Player.PrimaryHold.canceled += OnPrimaryHoldCancelled;
         _controls.Player.AltClick.performed += OnAltClick;
+        _controls.Player.Remove.performed += OnRemove;
         _controls.Player.AltHold.started += OnAltHoldStarted;
         _controls.Player.AltHold.canceled += OnAltHoldCancelled;
     }
@@ -39,6 +41,7 @@ public class InputInitializer : MonoBehaviour
         _controls.Player.PrimaryHold.started -= OnPrimaryHoldStarted;
         _controls.Player.PrimaryHold.canceled -= OnPrimaryHoldCancelled;
         _controls.Player.AltClick.performed -= OnAltClick;
+        _controls.Player.Remove.performed -= OnRemove;
         _controls.Player.AltHold.started -= OnAltHoldStarted;
         _controls.Player.AltHold.canceled -= OnAltHoldCancelled;
         _controls.Player.Disable();
@@ -61,6 +64,7 @@ public class InputInitializer : MonoBehaviour
 
     private void OnPrimaryClick(InputAction.CallbackContext obj) => PrimaryClickInput?.Invoke(MousePosition());
     private void OnAltClick(InputAction.CallbackContext obj) => AltClickInput?.Invoke(MousePosition());
+    private void OnRemove(InputAction.CallbackContext obj) => OnRemoveInput?.Invoke(MousePosition());
 
     private void OnPrimaryHoldStarted(InputAction.CallbackContext obj)
     {

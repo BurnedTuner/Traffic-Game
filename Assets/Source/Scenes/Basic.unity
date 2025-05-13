@@ -333,7 +333,8 @@ MonoBehaviour:
   StepsTakenTotal: 0
   TotalIdle: 0
   TotalBlocked: 0
-  CollectStats: 0
+  TimeSpent: 0
+  CollectStats: 1
 --- !u!4 &345880988
 Transform:
   m_ObjectHideFlags: 0
@@ -695,7 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a127f6bda74fff4d92c37e112fdb1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateName: Double.json
+  _stateName: BigCircle.json
   _stateData:
     _stateName: NewState
     GridOrigin: {x: 0, y: 0, z: 0}
@@ -707,9 +708,11 @@ MonoBehaviour:
     StepsTotal: 0
     TotalIdle: 0
     TotalBlocked: 0
+    AmountOfTasks: 0
     StepsPerAgent: 
     BlockedPerAgent: 
     IdlePerAgent: 
+    TimeSpent: 0
   _selectiveSaveLoad:
   - {fileID: 1855684795}
   - {fileID: 799441304}
@@ -899,7 +902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridOrigin: {x: 0, y: 0, z: 0}
-  _gridSize: {x: 9, y: 9}
+  _gridSize: {x: 10, y: 10}
   _cellSize: {x: 1, y: 1, z: 1}
   _cellPrefab: {fileID: 5394341812250677516, guid: c86f9a6668147e94e88441ce12bf232d, type: 3}
 --- !u!4 &1855684797
@@ -958,9 +961,9 @@ MonoBehaviour:
   AvailibleTasks: []
   AllAgents: []
   AvailibleAgents: []
-  GenerateTasks: 1
+  GenerateTasks: 0
   PossibleCells: []
-  AmountOfTasks: 20
+  AmountOfTasks: 50
 --- !u!4 &2075153010
 Transform:
   m_ObjectHideFlags: 0

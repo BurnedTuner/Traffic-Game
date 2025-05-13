@@ -8,15 +8,18 @@ public class GroundPointer : MonoBehaviour
 {
     public event Action<Vector3> GroundClicked;
     public event Action<Vector3> GroundAltClicked;
+    public event Action<Vector3> OnRemoveClicked;
 
     private void OnEnable()
     {
         InputInitializer.Instance.AltClickInput += OnAltClickInput;
+        InputInitializer.Instance.OnRemoveInput += OnRemoveInput;
     }
 
     private void OnDisable()
     {
         InputInitializer.Instance.AltClickInput -= OnAltClickInput;
+        InputInitializer.Instance.OnRemoveInput -= OnRemoveInput;
     }
 
     private void Update()
@@ -41,6 +44,15 @@ public class GroundPointer : MonoBehaviour
             Vector3 position = (Vector3)RaycastGround(screenPos);
             //Debug.Log(position);
             GroundClicked?.Invoke(position);
+        }
+    }
+
+    private void OnRemoveInput(Vector2 screenPos)
+    {
+        if (RaycastGround(screenPos) != null)
+        {
+            Vector3 position = (Vector3)RaycastGround(screenPos);
+            OnRemoveClicked?.Invoke(position);
         }
     }
 

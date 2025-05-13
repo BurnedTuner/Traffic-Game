@@ -71,6 +71,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Remove"",
+                    ""type"": ""Button"",
+                    ""id"": ""aafcfd11-c9dd-409c-91dc-928603e28db5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""AltHold"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""223a93c1-b8f2-415c-bbca-936b7a34a3c8"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Remove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -141,6 +161,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_PrimaryHold = m_Player.FindAction("PrimaryHold", throwIfNotFound: true);
         m_Player_AltClick = m_Player.FindAction("AltClick", throwIfNotFound: true);
         m_Player_AltHold = m_Player.FindAction("AltHold", throwIfNotFound: true);
+        m_Player_Remove = m_Player.FindAction("Remove", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -212,6 +233,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PrimaryHold;
     private readonly InputAction m_Player_AltClick;
     private readonly InputAction m_Player_AltHold;
+    private readonly InputAction m_Player_Remove;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -221,6 +243,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @PrimaryHold => m_Wrapper.m_Player_PrimaryHold;
         public InputAction @AltClick => m_Wrapper.m_Player_AltClick;
         public InputAction @AltHold => m_Wrapper.m_Player_AltHold;
+        public InputAction @Remove => m_Wrapper.m_Player_Remove;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -245,6 +268,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @AltHold.started += instance.OnAltHold;
             @AltHold.performed += instance.OnAltHold;
             @AltHold.canceled += instance.OnAltHold;
+            @Remove.started += instance.OnRemove;
+            @Remove.performed += instance.OnRemove;
+            @Remove.canceled += instance.OnRemove;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -264,6 +290,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @AltHold.started -= instance.OnAltHold;
             @AltHold.performed -= instance.OnAltHold;
             @AltHold.canceled -= instance.OnAltHold;
+            @Remove.started -= instance.OnRemove;
+            @Remove.performed -= instance.OnRemove;
+            @Remove.canceled -= instance.OnRemove;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -288,5 +317,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnPrimaryHold(InputAction.CallbackContext context);
         void OnAltClick(InputAction.CallbackContext context);
         void OnAltHold(InputAction.CallbackContext context);
+        void OnRemove(InputAction.CallbackContext context);
     }
 }

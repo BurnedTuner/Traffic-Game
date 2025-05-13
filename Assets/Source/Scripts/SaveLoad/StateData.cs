@@ -18,6 +18,7 @@ public class StateData
     public List<int> StepsPerAgent;
     public List<int> BlockedPerAgent;
     public List<int> IdlePerAgent;
+    public float TimeSpent;
 
     public StateData()
     {

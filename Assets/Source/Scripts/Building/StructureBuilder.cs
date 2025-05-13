@@ -75,4 +75,14 @@ public class StructureBuilder : MonoBehaviour
         else if (_structureDictionary.ContainsKey(modifiedCell))
             _structureDictionary[modifiedCell].SwapModel(newModel, rotation);
     }
+    
+    public void RemoveStructure(Cell cell)
+    {
+        if(_structureDictionary.ContainsKey(cell))
+        {
+            cell.ChangeCellType(CellType.Empty);
+            Destroy(_structureDictionary[cell].gameObject);
+            _structureDictionary.Remove(cell);
+        }
+    }
 }

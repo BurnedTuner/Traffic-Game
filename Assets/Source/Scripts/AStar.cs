@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AStar
 {
-    private static float _maxT = float.PositiveInfinity;
+    private static float _maxT = 1000;
 
     public static bool FindTwoPointPath(Cell start, Cell point1, Cell point2, out List<Cell> path, Agent agent = null)
     {
