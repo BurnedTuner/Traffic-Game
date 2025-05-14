@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a127f6bda74fff4d92c37e112fdb1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateName: BigCircle.json
+  _stateName: BigCircleResult.json
   _stateData:
     _stateName: NewState
     GridOrigin: {x: 0, y: 0, z: 0}
@@ -978,7 +978,7 @@ MonoBehaviour:
   AvailibleAgents: []
   GenerateTasks: 1
   PossibleCells: []
-  AmountOfTasks: 50
+  AmountOfTasks: 10
 --- !u!4 &2075153010
 Transform:
   m_ObjectHideFlags: 0

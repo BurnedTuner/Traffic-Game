@@ -36,7 +36,7 @@ public class AStar
                 proccessedLabel2.Add(queue[lowestFIndex].Item1, queue[lowestFIndex].Item2);
 
 
-            if (queue[lowestFIndex].Item2.Label == 1 && queue[lowestFIndex].Item2.Time > _maxT)
+            if (queue[lowestFIndex].Item2.Time > _maxT)
             {
                 queue.RemoveAt(lowestFIndex);
                 continue;

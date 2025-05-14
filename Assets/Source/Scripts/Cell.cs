@@ -89,7 +89,7 @@ public class Cell : MonoBehaviour
         switch(newType)
         {
             case CellType.Empty:
-                NodeCost = 99;
+                NodeCost = int.MaxValue;
                 break;
 
             case CellType.Road:

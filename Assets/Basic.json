@@ -86,8 +86,9 @@
         }
     ],
     "StepsTotal": 22,
-    "TotalIdle": 1,
+    "TotalIdle": 0,
     "TotalBlocked": 0,
+    "AmountOfTasks": 1,
     "StepsPerAgent": [
         22
     ],
@@ -95,6 +96,7 @@
         0
     ],
     "IdlePerAgent": [
-        1
-    ]
+        0
+    ],
+    "TimeSpent": 0.4440496563911438
 }

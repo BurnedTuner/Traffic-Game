@@ -109,8 +109,10 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
             for (int i = 0; i < AmountOfTasks; i++)
             {
                 TaskToAdd = new Task();
-                int pickUp = Random.Range(0, PossibleCells.Count - 1);
-                int delivery = Random.Range(0, PossibleCells.Count - 1);
+                int pickUp = Random.Range(0, PossibleCells.Count);
+                int delivery = Random.Range(0, PossibleCells.Count);
+                while(delivery == pickUp)
+                    delivery = Random.Range(0, PossibleCells.Count);
                 TaskToAdd.PickUpNode = PossibleCells[pickUp];
                 TaskToAdd.DeliveryNode = PossibleCells[delivery];
                 AllTasks.Add(TaskToAdd);

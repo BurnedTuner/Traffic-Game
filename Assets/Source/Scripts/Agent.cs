@@ -40,11 +40,16 @@ public class Agent : MonoBehaviour
         {
             DrawPath();
             if (Path[1].AttachedAgent != this && Path[1].AttachedAgent != null)
+            {
+                if (Path[1].AttachedAgent.AssignedTask == null)
+                    Path[1].AttachedAgent.TryFreeCurrentCell();
+                else
                 if (!TryUpdatePath())
                 {
                     Blocked?.Invoke(this);
                     return;
                 }
+            }
 
             if ((Path[1].transform.position - Path[0].transform.position) != Vector3.zero)
                 transform.position += (Path[1].transform.position - Path[0].transform.position).normalized * Speed;
