@@ -28,7 +28,7 @@ public class Agent : MonoBehaviour
         if(CurrentCell && AssignedTask.DeliveryNode && AssignedTask.PickUpNode)
         {
             List<Cell> path;
-            if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
+            if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, 1000, this))
                 for (int i = 0; i < path.Count - 1; i++)
                     Debug.DrawLine(path[i].transform.position + Vector3.up, path[i + 1].transform.position + Vector3.up, Color.red, 10);
         }
@@ -90,14 +90,14 @@ public class Agent : MonoBehaviour
             
             if (!AssignedTask.PickedUp)
             {
-                if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, this))
+                if (AStar.FindTwoPointPath(CurrentCell, AssignedTask.PickUpNode, AssignedTask.DeliveryNode, out path, 1000, this))
                 {
                     Path = path;
                     return true;
                 }
             }
             else
-                if (AStar.FindPath(CurrentCell, AssignedTask.DeliveryNode, out path, this))
+                if (AStar.FindPath(CurrentCell, AssignedTask.DeliveryNode, out path, 1000, this))
             {
                 Path = path;
                 return true;
@@ -115,7 +115,7 @@ public class Agent : MonoBehaviour
             if(!cell.AttachedAgent)
             {
                 List<Cell> path;
-                if (AStar.FindPath(CurrentCell, cell, out path, this))
+                if (AStar.FindPath(CurrentCell, cell, out path, 1000, this))
                     Path = path;
             }
         }

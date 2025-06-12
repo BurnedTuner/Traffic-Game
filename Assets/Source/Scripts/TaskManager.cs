@@ -52,7 +52,7 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
             for (int j = 0; j < AvailibleAgents.Count; j++)
             {
                 List<Cell> path;
-                if (AStar.FindTwoPointPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, out path, AvailibleAgents[j]))
+                if (AStar.FindTwoPointPath(AvailibleAgents[j].CurrentCell, AvailibleTasks[i].PickUpNode, AvailibleTasks[i].DeliveryNode, out path, 1000, AvailibleAgents[j]))
                 {
                     AllTasks.Find(x => x == AvailibleTasks[i]).AssignedAgent = AvailibleAgents[j];
                     AvailibleTasks[i].AssignedAgent = AvailibleAgents[j];
@@ -84,7 +84,7 @@ public class TaskManager : MonoBehaviour, ISaveLoadDependant
         foreach(Task task in AvailibleTasks)
         {
             List<Cell> path;
-            if (AStar.FindPath(task.PickUpNode, task.DeliveryNode, out path))
+            if (AStar.FindPath(task.PickUpNode, task.DeliveryNode,  out path, 1000))
                 for (int i = 0; i < path.Count - 1; i++)
                     Debug.DrawLine(path[i].transform.position + Vector3.up, path[i + 1].transform.position + Vector3.up, Color.green, 10);
             else

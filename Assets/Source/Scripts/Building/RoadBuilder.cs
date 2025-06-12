@@ -64,7 +64,7 @@ public class RoadBuilder : MonoBehaviour
             Cell endCell = _builder.GetCellByPosition(position);
 
             List<Cell> tempCells;
-            if (AStar.FindPath(startCell, endCell, out tempCells))
+            if (AStar.FindPath(startCell, endCell, out tempCells, float.PositiveInfinity))
             {
                 foreach (Cell cell in tempCells)
                 {

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class AStar
 {
-    private static float _maxT = 1000;
-
-    public static bool FindTwoPointPath(Cell start, Cell point1, Cell point2, out List<Cell> path, Agent agent = null)
+    public static bool FindTwoPointPath(Cell start, Cell point1, Cell point2, out List<Cell> path, float maxT, Agent agent = null)
     {
         path = new List<Cell>();
         List<(Cell, NodeInfo)> queue = new List<(Cell, NodeInfo)>();
@@ -36,7 +34,7 @@ public class AStar
                 proccessedLabel2.Add(queue[lowestFIndex].Item1, queue[lowestFIndex].Item2);
 
 
-            if (queue[lowestFIndex].Item2.Time > _maxT)
+            if (queue[lowestFIndex].Item2.Time > maxT)
             {
                 queue.RemoveAt(lowestFIndex);
                 continue;
@@ -73,7 +71,7 @@ public class AStar
         return false;
     }
 
-    public static bool FindPath(Cell start, Cell end, out List<Cell> path, Agent agent = null)
+    public static bool FindPath(Cell start, Cell end, out List<Cell> path, float maxT, Agent agent = null)
     {
         path = new List<Cell>();
         List<(Cell, NodeInfo)> queue = new List<(Cell, NodeInfo)>();
@@ -93,7 +91,7 @@ public class AStar
             proccessed.Add(queue[lowestFIndex].Item1, queue[lowestFIndex].Item2);
 
 
-            if (queue[lowestFIndex].Item2.Time > _maxT)
+            if (queue[lowestFIndex].Item2.Time > maxT)
             {
                 queue.RemoveAt(lowestFIndex);
                 continue;
