@@ -12,11 +12,13 @@ public class StatisticsManager : MonoBehaviour, ISaveLoadDependant
     public Dictionary<Vector3, int> BlockedPerAgent = new Dictionary<Vector3, int>();
     public Dictionary<Vector3, int> IdlePerAgent = new Dictionary<Vector3, int>();
     public float TimeSpent;
+    public float TimeOnLoad;
     public bool CollectStats;
 
     public void LoadData(StateData stateData)
     {
         TimeSpent = 0;
+        TimeOnLoad = Time.realtimeSinceStartup;
         StepsPerAgent = new Dictionary<Vector3, int>();
         BlockedPerAgent = new Dictionary<Vector3, int>();
         IdlePerAgent = new Dictionary<Vector3, int>();
@@ -58,7 +60,7 @@ public class StatisticsManager : MonoBehaviour, ISaveLoadDependant
     private void Update()
     {
         if (CollectStats)
-            TimeSpent += Time.deltaTime;
+            TimeSpent = Time.realtimeSinceStartup - TimeOnLoad;
     }
 
     public void SaveData(ref StateData stateData)
